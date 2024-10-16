@@ -31,7 +31,7 @@ MyDB_BPlusTreeReaderWriter :: MyDB_BPlusTreeReaderWriter (string orderOnAttName,
 	rootPage.setType(DirectoryPage);
 
 	// append a new internal record with key = infinity
-	MyDB_INRecordPtr firstInRecord = make_shared<MyDB_INRecord>(getKey(getEmptyRecord()));
+	MyDB_INRecordPtr firstInRecord = getINRecord();
 	rootPage.append(firstInRecord);
 
 	// update the root location
@@ -61,7 +61,12 @@ bool MyDB_BPlusTreeReaderWriter :: discoverPages (int curPageNode, vector <MyDB_
 }
 
 void MyDB_BPlusTreeReaderWriter :: append (MyDB_RecordPtr appendMe) {
-	append(rootLocation, appendMe);
+	MyDB_RecordPtr appendedInRec = append(rootLocation, appendMe);
+	if (appendedInRec != nullptr) {
+
+	} else {
+
+	}
 }
 
 MyDB_RecordPtr MyDB_BPlusTreeReaderWriter :: split (MyDB_PageReaderWriter splitMe, MyDB_RecordPtr andMe) {
