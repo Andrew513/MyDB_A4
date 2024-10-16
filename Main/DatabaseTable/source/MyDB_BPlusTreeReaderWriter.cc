@@ -23,7 +23,7 @@ MyDB_BPlusTreeReaderWriter :: MyDB_BPlusTreeReaderWriter (string orderOnAttName,
 
 	int rootPageId = getTable()->lastPage() + 1;
 	int leafPageId = rootPageId + 1;
-	getTable()->setLastPage(leafPageId + 1);
+	getTable()->setLastPage(leafPageId);
 
 	// create a new root page
 	MyDB_PageReaderWriter rootPage = (*this)[rootPageId];
@@ -99,6 +99,7 @@ MyDB_INRecordPtr MyDB_BPlusTreeReaderWriter :: getINRecord () {
 }
 
 void MyDB_BPlusTreeReaderWriter :: printTree () {
+
 }
 
 MyDB_AttValPtr MyDB_BPlusTreeReaderWriter :: getKey (MyDB_RecordPtr fromMe) {
