@@ -70,11 +70,10 @@ MyDB_RecordPtr MyDB_BPlusTreeReaderWriter :: split (MyDB_PageReaderWriter splitM
 
 MyDB_RecordPtr MyDB_BPlusTreeReaderWriter :: append (int whichPage, MyDB_RecordPtr appendMe) {
 	MyDB_PageReaderWriter curPageNode = (*this)[whichPage];
-	MyDB_RecordPtr iterateIntoMe = getEmptyRecord();
-	MyDB_RecordIteratorPtr pageRecIter = curPageNode.getIterator(iterateIntoMe);
+	MyDB_RecordIteratorPtr pageRecIter = curPageNode.getIterator(appendMe);
 	if (curPageNode.getType() == RegularPage) {
 		// reach leaf page, append appendMe
-		if (!(pageRecIter->hasNext() && curPageNode.append(appendMe))) {
+		if (!curPageNode.append(appendMe)) {
 			// leaf page is full, need to split
 			MyDB_RecordPtr splitedInRecord = split(curPageNode, appendMe);
 			return splitedInRecord;
@@ -82,8 +81,8 @@ MyDB_RecordPtr MyDB_BPlusTreeReaderWriter :: append (int whichPage, MyDB_RecordP
 	} else {
 		// iterate all inRecords in curPageNode
 		while (pageRecIter->hasNext()) {
-			// compare inRecord's attribute with appendMe's attribute, appendMe's smaller, recursively append appendMe
-
+			// compare inRecord's attribute with appendMe's attribute, if appendMe's smaller, recursively append appendMe
+			
 		}
 	}
 
